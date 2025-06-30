@@ -8,7 +8,24 @@ const port = process.env.PORT || 3000;
 const app = express();
 
 app.use(express.json({ limit: "200mb" }));
-app.use(cors());
+
+// Configure CORS properly
+const corsOptions = {
+  origin: [
+    "http://localhost:5173", // Local development
+    "http://localhost:3000", // Local development
+    "https://gray-colonial-jellyfish.app.genez.io", // deployed frontend
+    /\.genez\.io$/, // Allow all genezio subdomains
+  ],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
+
+// Handle preflight requests
+app.options("*", cors(corsOptions));
 
 app.get("/", (req, res) => {
   res.send("Hello World!");

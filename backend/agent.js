@@ -37,10 +37,10 @@ const triggerYoutubeVideoScrapeTool = tool(
   async ({ url }) => {
     console.log("Triggering YouTube video scrape", url);
 
-    const snapshotId = await triggerYoutubeVideoScrape(url);
+    const scrapeResult = await triggerYoutubeVideoScrape(url);
 
-    console.log("YouTube video scrape triggered", snapshotId);
-    return snapshotId;
+    console.log("YouTube video scrape triggered", scrapeResult);
+    return scrapeResult;
   },
   {
     name: "triggerYoutubeVideoScrape",

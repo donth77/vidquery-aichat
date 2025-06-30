@@ -1,0 +1,26 @@
+name: VidQueryAIChat
+region: us-east-1
+yamlVersion: 2
+
+backend:
+  path: backend
+  language:
+    name: js
+    packageManager: pnpm
+  environment:
+    API_URL: ${{ backend.functions.api.url }}
+
+  functions:
+    - name: api
+      path: ./
+      entry: index.js
+      type: httpServer
+
+frontend:
+  path: frontend
+  publish: dist
+  scripts:
+    deploy: pnpm run build
+  environment:
+    VITE_API_URL: ${{ backend.functions.api.url }}
+  subdomain: gray-colonial-jellyfish
